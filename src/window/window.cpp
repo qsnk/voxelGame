@@ -1,5 +1,6 @@
 #include "window.hpp"
 #include "events.hpp"
+#include "../world/world.hpp"
 #include "../includes.hpp"
 
 GLFWwindow* Window::window = nullptr;
@@ -32,6 +33,7 @@ int Window::initialize() {
     Window::setViewport(posX, posY, width, height);
     Window::makeContextCurrent(window);
 
+    World::createPlane();
     Window::renderLoop();
 
     return 0;

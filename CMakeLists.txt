@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 20)
 file(GLOB_RECURSE HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp)
 file(GLOB_RECURSE SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 
-add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
+add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES}
+        src/world/world.cpp)
 
 find_package(OpenGL REQUIRED)
 find_package(GLEW REQUIRED)

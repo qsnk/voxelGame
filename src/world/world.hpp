@@ -3,8 +3,8 @@
 
 class World {
   public:
-    void createPlane();
+    static void createPlane();
 
-}
+};
 
 #endif //WORLD_HPP
