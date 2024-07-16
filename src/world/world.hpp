@@ -3,7 +3,6 @@
 
 class World {
   public:
-    static void createPlane();
 
 };
 

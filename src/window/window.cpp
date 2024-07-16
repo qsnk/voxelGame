@@ -30,20 +30,28 @@ int Window::initialize() {
 
     window = Window::create(width, height, title, nullptr, nullptr);
 
+    if (!window){
+        Window::terminate();
+        return -1;
+    }
+    Window::makeContextCurrent();
     Window::setViewport(posX, posY, width, height);
-    Window::makeContextCurrent(window);
+    Window::clearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    Window::clearDepthBuffer();
 
-    World::createPlane();
-    Window::renderLoop();
-
+    glewExperimental = GL_TRUE;
+    GLenum glewErr = glewInit();
+    if (glewErr != GLEW_OK) {
+        return -1;
+    }
     return 0;
 }
 
-void Window::swapBuffers(GLFWwindow* window) {
+void Window::swapBuffers() {
     glfwSwapBuffers(window);
 }
 
-void Window::makeContextCurrent(GLFWwindow* window) {
+void Window::makeContextCurrent() {
     glfwMakeContextCurrent(window);
 }
 
@@ -55,6 +63,11 @@ GLFWwindow* Window::create(int width, int height, const char *title, GLFWmonitor
 void Window::clear() {
     glClear(GL_COLOR_BUFFER_BIT);
 }
+
+void Window::clearColor(float red, float green, float blue, float alpha) {
+    glClearColor(red, green, blue, alpha);
+}
+
 
 void Window::clearDepthBuffer() {
     glClearDepth(GL_DEPTH_BUFFER_BIT);
@@ -84,16 +97,6 @@ void Window::setShouldClose(GLFWwindow* window, bool value) {
     glfwSetWindowShouldClose(window, value);
 }
 
-bool Window::isClosed(GLFWwindow *window) {
+bool Window::isClosed() {
     return glfwWindowShouldClose(window);
-}
-
-void Window::renderLoop() {
-    while (!Window::isClosed(window)) {
-        Window::setBgColor(0.2f, 0.3f, 0.3f, 1.0f);
-        Window::clear();
-
-        Window::swapBuffers(window);
-        Events::pollEvents();
-    }
 }
